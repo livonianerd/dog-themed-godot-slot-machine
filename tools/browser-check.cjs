@@ -20,7 +20,7 @@ async function saved(page) {
 }
 async function untilSaved(page,predicate){
  for(let i=0;i<30;i++){const s=await saved(page);if(s&&predicate(s))return s;await page.waitForTimeout(200)}
- throw new Error('Expected saved state not reached');
+ throw new Error('Expected saved state not reached: '+JSON.stringify(await saved(page)));
 }
 (async()=>{
  const browser=await chromium.launch({headless:true,args:['--no-sandbox','--enable-webgl','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
@@ -35,8 +35,13 @@ async function untilSaved(page,predicate){
  await p.keyboard.press('4');await p.keyboard.press('Space');await p.waitForTimeout(3000);
  let s=await untilSaved(p,s=>s.stats.paid===1);assert.equal(s.bet,4);assert.equal(s.stats.wagered,4);
  const jackpot=s.jackpot;
- await p.mouse.click(1150,60);await p.waitForTimeout(300);
- await p.mouse.click(550,195);await p.mouse.click(1060,80);await p.waitForTimeout(300);
+ await p.keyboard.press('s');await p.waitForTimeout(600);
+ if(s.stats.bonuses>0){await p.keyboard.press('Escape');await p.waitForTimeout(200)}
+ await p.mouse.click(1150,60);await p.waitForTimeout(700);
+ await p.screenshot({path:'/tmp/dog-settings-live.png'});
+ await p.mouse.click(550,195);await p.waitForTimeout(600);
+ await p.screenshot({path:'/tmp/dog-settings-after-theme.png'});
+ await p.mouse.click(1060,80);await p.waitForTimeout(500);
  s=await untilSaved(p,s=>s.theme===1);assert.equal(s.jackpot,jackpot);
  await p.screenshot({path:'/tmp/dog-snow-verified.png'});
  await p.reload();await p.waitForTimeout(5000);

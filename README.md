@@ -192,5 +192,5 @@ MIT. All game-specific SVG art and audio are original and reproducible with
 Barks/howls are simple synthesized effects. Dog breeds beyond the two leads
 are stylized palette variants, not anatomically detailed models. Portrait,
 cloud saves, native mobile packages and real-money features are not included.
-Windows export is built automatically; native Windows runtime testing requires
-a Windows machine. See verification notes for exactly what was tested.
+Windows and Linux release executables passed native headless CI launch tests;
+a full interactive Windows GUI session has not been manually tested. See verification notes for exactly what was tested.

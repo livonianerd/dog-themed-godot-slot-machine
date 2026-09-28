@@ -27,6 +27,22 @@
   screen has no developer button. Engine test fixtures can still exercise debug
   outcomes headlessly, without shipping an accessible release debug menu.
 
+## GitHub and live deployment
+
+- [Workflow 36368929987](https://github.com/livonianerd/dog-themed-godot-slot-machine/actions/runs/36368929987)
+  successfully built all three platforms, uploaded both desktop ZIPs/checksums,
+  launched the Linux release, launched the Windows release on `windows-latest`,
+  and deployed Pages.
+- The live site at https://livonianerd.github.io/dog-themed-godot-slot-machine/
+  passed Chromium assertions for Bet 4/wager deduction, spin completion, theme
+  persistence across reload, jackpot persistence, resizing, landscape touch spins
+  and refilling. There were no browser script or asset-loading errors.
+- An initial live theme test needed a longer wait between modal interactions;
+  the test now waits for layout to settle and verifies persisted state. This was
+  a test timing fix, not a probability or gameplay change.
+- Playwright is installed separately under `/tmp/dog-browser`; no other project
+  is needed or modified by the repository or verification scripts.
+
 ## Reproduce
 
 `bash tools/build.sh` runs exact math, unit checks and integration checks before
@@ -36,8 +52,9 @@ The simulation isn't repeated on every push; exact mathematical validation is.
 
 ## Deliberate scope and limitations
 
-- Native Windows execution has not been tested on a Windows machine; its release
-  export and package are built automatically. Desktop binaries are unsigned.
+- Windows and Linux releases both passed native headless launch tests. A full
+  interactive desktop GUI session on Windows has not been manually tested.
+  Desktop binaries are unsigned.
 - Palette variants represent the six additional breeds. The Dachshund and Husky
   have distinct original silhouettes; accessory selections are actual overlays.
 - Barks/howls and music are synthesized, not studio recordings. No recorded audio
