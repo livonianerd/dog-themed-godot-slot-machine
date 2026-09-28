@@ -1,0 +1,140 @@
+{
+  "names": [
+    "Bone",
+    "Tennis Ball",
+    "Paw Print",
+    "Dog Bowl",
+    "Dachshund",
+    "Husky",
+    "Golden Biscuit",
+    "Doghouse",
+    "Wild Puppy",
+    "Jackpot Collar",
+    "Bonus Bone"
+  ],
+  "weights": [
+    30,
+    19,
+    14,
+    10,
+    8,
+    6,
+    4,
+    3,
+    3,
+    1,
+    2
+  ],
+  "payouts": [
+    [
+      2,
+      5,
+      12
+    ],
+    [
+      2.5,
+      6,
+      15
+    ],
+    [
+      3,
+      7,
+      18
+    ],
+    [
+      4,
+      10,
+      25
+    ],
+    [
+      5,
+      12,
+      35
+    ],
+    [
+      6,
+      15,
+      40
+    ],
+    [
+      7,
+      18,
+      60
+    ],
+    [
+      8,
+      20,
+      80
+    ],
+    [
+      8,
+      20,
+      80
+    ]
+  ],
+  "lines": [
+    [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    [
+      0,
+      0,
+      1,
+      2,
+      2
+    ],
+    [
+      2,
+      2,
+      1,
+      0,
+      0
+    ]
+  ],
+  "jackpot_base": 500.0,
+  "jackpot_probability": 2.5e-05,
+  "contribution_per_credit": 0.005,
+  "bonus_probability": 0.01,
+  "bonus_rewards": [
+    2,
+    3,
+    4,
+    7
+  ],
+  "free_rewards": [
+    5,
+    8,
+    10
+  ],
+  "max_generation": 6,
+  "max_bet_multiplier": 1.015,
+  "target_rtp": 1.03,
+  "line_scale": 4.321746009844741,
+  "exact_raw_line_ev": 0.2219013852,
+  "expected_children": 0.015762141806030448,
+  "expected_spins_per_paid": 1.0160145656606945,
+  "theoretical_rtp": [
+    1.0327001820707589,
+    1.0263500910353796,
+    1.0242333940235864,
+    1.0377904367782933
+  ]
+}

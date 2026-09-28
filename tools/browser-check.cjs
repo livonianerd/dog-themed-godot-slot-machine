@@ -1,0 +1,32 @@
+const {chromium}=require('playwright');
+const assert=require('node:assert/strict');
+(async()=>{
+ const browser=await chromium.launch({headless:true,args:['--no-sandbox','--enable-webgl','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+ const errors=[];
+ const context=await browser.newContext({viewport:{width:1280,height:800}});
+ const p=await context.newPage();
+ p.on('pageerror',e=>errors.push(String(e)));
+ p.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
+ p.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`)});
+ const base=process.argv[2]||'http://127.0.0.1:8765/build/web/';
+ await p.goto(base);await p.waitForTimeout(7000);
+ await p.screenshot({path:'docs/screenshot-meadow.png'});
+ await p.mouse.click(128,720);await p.keyboard.press('Space');await p.waitForTimeout(3000);
+ await p.mouse.click(1150,60);await p.waitForTimeout(300);
+ await p.screenshot({path:'/tmp/dog-settings.png'});
+ await p.mouse.click(550,195);await p.mouse.click(1060,80);await p.waitForTimeout(300);
+ await p.screenshot({path:'docs/screenshot-snow.png'});
+ await p.keyboard.press('p');await p.waitForTimeout(300);await p.screenshot({path:'/tmp/dog-odds.png'});
+ await p.keyboard.press('Escape');
+ await p.setViewportSize({width:960,height:600});await p.waitForTimeout(500);await p.screenshot({path:'/tmp/dog-resize.png'});
+ const mobile=await browser.newContext({viewport:{width:844,height:390},isMobile:true,hasTouch:true,deviceScaleFactor:1});
+ const mp=await mobile.newPage();mp.on('pageerror',e=>errors.push(String(e)));
+ await mp.goto(base);await mp.waitForTimeout(6000);
+ await mp.screenshot({path:'/tmp/dog-mobile.png'});
+ // Fixed design canvas is letterboxed by Godot; inspect canvas bounding box.
+ const canvas=await mp.locator('canvas').boundingBox();console.log('Mobile canvas',canvas);
+ await mp.touchscreen.tap(canvas.x+canvas.width*.50,canvas.y+canvas.height*.905);
+ await mp.waitForTimeout(3000);await mp.screenshot({path:'/tmp/dog-mobile-spin.png'});
+ console.log('Errors:',errors);assert.equal(errors.length,0);
+ await browser.close();
+})();
